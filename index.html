@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOIX-OFF & MÉDIAS - Donnez une voix unique à vos projets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- EN-TÊTE STICKY -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#accueil" class="logo" onclick="switchSiteTab('accueil', event)">VOIX-OFF & MÉDIAS</a>
+            <nav class="main-nav">
+                <a href="#accueil" class="nav-link active" onclick="switchSiteTab('accueil', event)">Accueil</a>
+                <a href="#articles" class="nav-link" onclick="switchSiteTab('articles', event)">Articles</a>
+                <a href="#podcasts" class="nav-link" onclick="switchSiteTab('podcasts', event)">Podcasts</a>
+                <a href="#videos" class="nav-link" onclick="switchSiteTab('videos', event)">Vidéos</a>
+                <a href="#devis" class="nav-link" onclick="switchSiteTab('devis', event)">Devis</a>
+                <a href="#contact" class="nav-link" onclick="switchSiteTab('contact', event)">Contact</a>
+                <a href="admin.html" class="nav-link admin-nav-link" target="_blank">⚙️ Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. SECTION ACCUEIL -->
+    <section id="accueil" class="hero tab-page">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Donnez une voix unique à vos projets !</h1>
+                <p>Explorez mon univers de voix off, podcasts, vidéos et articles.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="switchSiteTab('podcasts', event)">ÉCOUTER LES DÉMOS</button>
+                    <button class="btn btn-secondary" onclick="switchSiteTab('devis', event)">DEMANDER UN DEVIS</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="images/personnage_central_hero.png" alt="Personnage principal Voix-Off" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. SECTION ARTICLES -->
+    <section id="articles" class="container section-block tab-page hidden">
+        <h2 class="section-title">ARTICLES & BLOG</h2>
+        <div class="grid-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <!-- Les articles dynamiques injectés depuis le script s'afficheront ici -->
+        </div>
+    </section>
+
+    <!-- 3. SECTION PODCASTS -->
+    <section id="podcasts" class="container section-block tab-page hidden">
+        <h2 class="section-title">PODCASTS & AUDIOS</h2>
+        <!-- Les podcasts dynamiques s'afficheront ici -->
+    </section>
+
+    <!-- 4. SECTION VIDÉOS -->
+    <section id="videos" class="container section-block tab-page hidden">
+        <h2 class="section-title">VIDÉOS</h2>
+        <!-- Les vidéos dynamiques s'afficheront ici -->
+    </section>
+
+    <!-- 5. SECTION DEVIS -->
+    <section id="devis" class="container section-block tab-page hidden">
+        <h2 class="section-title">DEMANDE DE DEVIS</h2>
+        <form class="contact-form" onsubmit="handleDevisSubmit(event)">
+            <div class="form-group">
+                <input type="text" placeholder="Votre Nom / Société" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Votre E-mail" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Votre numéro de téléphone (Facultatif)">
+            </div>
+            <div class="form-group">
+                <select style="width: 100%; padding: 15px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; color: var(--text-main); font-size: 1rem;" required>
+                    <option value="">Sélectionnez le type de projet</option>
+                    <option value="pub">Publicité / Spot Radio-TV-Internet</option>
+                    <option value="fiction">Fiction / Voix de personnage</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea rows="4" placeholder="Détails de votre projet..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer la demande de devis</button>
+        </form>
+    </section>
+
+    <!-- 6. SECTION CONTACT -->
+    <section id="contact" class="container section-block tab-page hidden">
+        <h2 class="section-title">CONTACT</h2>
+        <div class="about-content">
+            <p id="site-about-text">Comédien voix-off professionnel équipé d'un home-studio broadcast traité acoustiquement...</p>
+            <p style="margin-top: 20px;">Une question, un projet urgent ? Contactez-moi directement.</p>
+            <p><strong>Email :</strong> contact@voixoff-medias.fr</p>
+            <p><strong>Téléphone :</strong> +33 (0)6 00 00 00 00</p>
+        </div>
+    </section>
+
+    <!-- PIED DE PAGE -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 VOIX-OFF & MÉDIAS — Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- MODALE DE LECTURE D'ARTICLE -->
+    <div id="read-article-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 3000; padding: 20px;">
+        <div style="background: #131b2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 30px; width: 100%; max-width: 700px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.6); position: relative;">
+            <button onclick="closeReadModal()" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 id="read-modal-title" style="margin-bottom: 15px; font-size: 1.5rem; color: #f8fafc;">Titre de l'article</h2>
+            <p id="read-modal-content" style="color: #94a3b8; line-height: 1.8; white-space: pre-line; font-size: 1rem;">Contenu complet...</p>
+        </div>
+    </div>
+
+    <!-- Script du site -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration — VOIX-OFF & MÉDIAS</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-layout">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="admin-toast hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-msg">Modifications enregistrées !</span>
+    </div>
+
+    <!-- MENU LATÉRAL GAUCHE -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+            <h2>⚙️ Administration</h2>
+            <span>Espace de gestion v1.0</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" onclick="switchTab('section-accueil', event)"><i class="fa-solid fa-house"></i> Accueil (Hero & Bio)</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('section-articles', event)"><i class="fa-solid fa-newspaper"></i> Articles & Blog</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('section-podcasts', event)"><i class="fa-solid fa-podcast"></i> Podcasts & Audios</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('section-videos', event)"><i class="fa-solid fa-video"></i> Vidéos (YouTube)</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('section-devis', event)"><i class="fa-solid fa-file-invoice-dollar"></i> Devis & Tarifs</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('section-contact', event)"><i class="fa-solid fa-envelope"></i> Contact & Réseaux</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="back-site-btn" target="_blank"><i class="fa-solid fa-arrow-left"></i> Voir le site public</a>
+        </div>
+    </aside>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="admin-content">
+        <header class="content-header">
+            <h1>Tableau de bord studio</h1>
+            <p>Pilotez l'ensemble des contenus de votre portfolio en temps réel.</p>
+        </header>
+
+        <div class="admin-sections-container">
+            
+            <!-- 1. ACCUEIL & BIO -->
+            <section id="section-accueil" class="admin-card tab-content">
+                <h3><i class="fa-solid fa-house"></i> Section Accueil & Bio</h3>
+                <form class="admin-form" onsubmit="saveAccueil(event)">
+                    <div class="form-group">
+                        <label>Titre Principal (H1)</label>
+                        <input type="text" id="adm-hero-title" value="Donnez une voix unique à vos projets !">
+                    </div>
+                    <div class="form-group">
+                        <label>Sous-titre / Description</label>
+                        <textarea id="adm-hero-subtitle" rows="2">Explorez mon univers de voix off, podcasts, vidéos et articles.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Texte de présentation / Studio (À propos)</label>
+                        <textarea id="adm-about-text" rows="3">Comédien voix-off professionnel équipé d'un home-studio broadcast...</textarea>
+                    </div>
+                    <button type="submit" class="btn-admin">Enregistrer l'Accueil</button>
+                </form>
+            </section>
+
+            <!-- 2. ARTICLES & BLOG -->
+            <section id="section-articles" class="admin-card tab-content hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--admin-border); padding-bottom: 15px;">
+                    <h3 style="margin: 0; border: none; padding: 0;"><i class="fa-solid fa-newspaper"></i> Articles & Revue de Presse</h3>
+                    <button type="button" class="btn-admin" style="background: var(--admin-primary); margin: 0; padding: 8px 16px; font-size: 0.85rem;" onclick="openArticleModal()">
+                        <i class="fa-solid fa-plus"></i> Ajouter un Article
+                    </button>
+                </div>
+                <div id="admin-articles-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            </section>
+
+            <!-- 3. PODCASTS & SOUS-CATÉGORIES -->
+            <section id="section-podcasts" class="admin-card tab-content hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 15px;">
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; border: none; padding: 0;"><i class="fa-solid fa-podcast"></i> Gestion des Podcasts & Sous-Catégories</h3>
+                        <p style="color: var(--admin-muted); font-size: 0.85rem; margin: 0;">Gérez vos sous-catégories/émissions et vos enregistrements réécoutables.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn-admin" style="background: #8b5cf6; margin: 0; padding: 8px 16px; font-size: 0.85rem;" onclick="openSubCategoryModal()">
+                            <i class="fa-solid fa-tags"></i> Sous-Catégories
+                        </button>
+                        <button type="button" class="btn-admin" style="background: var(--admin-primary); margin: 0; padding: 8px 16px; font-size: 0.85rem;" onclick="openPodcastModal()">
+                            <i class="fa-solid fa-plus"></i> Ajouter un Replay
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background: #070a12; border: 1px solid var(--admin-border); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                    <span style="font-size: 0.8rem; color: var(--admin-muted); font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px;">
+                        <i class="fa-solid fa-layer-group"></i> Sous-catégories d'émissions configurées :
+                    </span>
+                    <div id="admin-subcategories-badges" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                </div>
+
+                <div id="admin-podcasts-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            </section>
+
+            <!-- 4. VIDÉOS & SOUS-CATÉGORIES -->
+            <section id="section-videos" class="admin-card tab-content hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 15px;">
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; border: none; padding: 0;"><i class="fa-solid fa-video"></i> Gestion des Vidéos & Sous-Catégories</h3>
+                        <p style="color: var(--admin-muted); font-size: 0.85rem; margin: 0;">Gérez vos catégories de vidéos YouTube et vos intégrations.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn-admin" style="background: #8b5cf6; margin: 0; padding: 8px 16px; font-size: 0.85rem;" onclick="openVideoSubCategoryModal()">
+                            <i class="fa-solid fa-tags"></i> Sous-Catégories Vidéos
+                        </button>
+                        <button type="button" class="btn-admin" style="background: var(--admin-primary); margin: 0; padding: 8px 16px; font-size: 0.85rem;" onclick="openVideoModal()">
+                            <i class="fa-solid fa-plus"></i> Ajouter une Vidéo
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background: #070a12; border: 1px solid var(--admin-border); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                    <span style="font-size: 0.8rem; color: var(--admin-muted); font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px;">
+                        <i class="fa-solid fa-layer-group"></i> Sous-catégories vidéos configurées :
+                    </span>
+                    <div id="admin-video-subcategories-badges" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                </div>
+
+                <div id="admin-videos-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            </section>
+
+            <!-- 5. DEVIS -->
+            <section id="section-devis" class="admin-card tab-content hidden">
+                <h3><i class="fa-solid fa-file-invoice-dollar"></i> Section Devis & Tarifs</h3>
+                <form class="admin-form" onsubmit="saveDevis(event)">
+                    <div class="form-group">
+                        <label>Message d'introduction</label>
+                        <textarea id="adm-devis-msg" rows="2">Remplissez ce formulaire pour recevoir un devis personnalisé sous 24h.</textarea>
+                    </div>
+                    <button type="submit" class="btn-admin">Enregistrer les Devis</button>
+                </form>
+            </section>
+
+            <!-- 6. CONTACT -->
+            <section id="section-contact" class="admin-card tab-content hidden">
+                <h3><i class="fa-solid fa-envelope"></i> Section Contact & Réseaux</h3>
+                <form class="admin-form" onsubmit="saveContact(event)">
+                    <div class="form-group">
+                        <label>Email de réception</label>
+                        <input type="email" id="adm-contact-email" value="contact@voixoff-medias.fr">
+                    </div>
+                    <button type="submit" class="btn-admin">Enregistrer le Contact</button>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- MODALE ARTICLES -->
+    <div id="article-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+        <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 30px; width: 100%; max-width: 850px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+            <h3 id="modal-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 10px; color: var(--admin-text);">Éditer l'article</h3>
+            <form class="admin-form" onsubmit="saveArticleModal(event)" style="display: flex; flex-direction: column; gap: 15px; overflow-y: auto; flex-grow: 1; padding-right: 5px;">
+                <input type="hidden" id="art-edit-index" value="-1">
+                <div class="form-group">
+                    <label>Titre de l'article</label>
+                    <input type="text" id="modal-art-title" required placeholder="Ex: L'art de la voix-off">
+                </div>
+                <div class="form-group">
+                    <label>Description / Extrait court</label>
+                    <input type="text" id="modal-art-desc" required placeholder="Bref résumé affiché sur la carte...">
+                </div>
+                <div class="form-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 5px;">Contenu complet de l'article</label>
+                    <div style="background: #070a12; border: 1px solid var(--admin-border); border-bottom: none; border-top-left-radius: 8px; border-top-right-radius: 8px; padding: 8px; display: flex; gap: 8px; align-items: center;">
+                        <button type="button" onclick="formatText('bold')" style="background: #111827; border: 1px solid var(--admin-border); color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-bold"></i></button>
+                        <button type="button" onclick="formatText('italic')" style="background: #111827; border: 1px solid var(--admin-border); color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-italic"></i></button>
+                        <button type="button" onclick="formatText('underline')" style="background: #111827; border: 1px solid var(--admin-border); color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-underline"></i></button>
+                    </div>
+                    <div id="modal-art-content" contenteditable="true" style="background: #0d1322; border: 1px solid var(--admin-border); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 15px; color: var(--admin-text); min-height: 200px; overflow-y: auto; outline: none;"></div>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+                    <button type="button" onclick="closeArticleModal()" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-text); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Annuler</button>
+                    <button type="submit" class="btn-admin" style="margin: 0;">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALE GESTION DES SOUS-CATÉGORIES PODCASTS -->
+    <div id="subcat-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+        <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 10px; color: var(--admin-text);">Gérer les Sous-Catégories (Podcasts)</h3>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="new-subcat-input" placeholder="Nom de la nouvelle émission..." style="flex-grow: 1; padding: 10px; background: #0d1322; border: 1px solid var(--admin-border); border-radius: 8px; color: white; outline: none;">
+                <button type="button" onclick="addSubCategory()" style="background: #8b5cf6; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">Ajouter</button>
+            </div>
+
+            <div id="subcat-list-modal" style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" onclick="closeSubCategoryModal()" style="background: var(--admin-primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE GESTION DES SOUS-CATÉGORIES VIDÉOS -->
+    <div id="video-subcat-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+        <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 10px; color: var(--admin-text);">Gérer les Sous-Catégories (Vidéos)</h3>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="new-video-subcat-input" placeholder="Nom de la catégorie vidéo..." style="flex-grow: 1; padding: 10px; background: #0d1322; border: 1px solid var(--admin-border); border-radius: 8px; color: white; outline: none;">
+                <button type="button" onclick="addVideoSubCategory()" style="background: #8b5cf6; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">Ajouter</button>
+            </div>
+
+            <div id="video-subcat-list-modal" style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" onclick="closeVideoSubCategoryModal()" style="background: var(--admin-primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE AJOUT / MODIFICATION REPLAY (PODCAST) -->
+    <div id="podcast-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+        <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 30px; width: 100%; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+            <h3 id="podcast-modal-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 10px; color: var(--admin-text);">Ajouter un Replay</h3>
+            <form class="admin-form" onsubmit="savePodcastModal(event)">
+                <input type="hidden" id="pod-edit-index" value="-1">
+                
+                <div class="form-group">
+                    <label>Titre du Replay *</label>
+                    <input type="text" id="pod-modal-title" required placeholder="Ex: Interview Maire">
+                </div>
+
+                <div class="form-group">
+                    <label>Sous-Catégorie / Émission *</label>
+                    <select id="pod-modal-subcat" required style="width: 100%; padding: 12px; background: #0d1322; border: 1px solid var(--admin-border); border-radius: 8px; color: white;">
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Date de diffusion *</label>
+                        <input type="text" id="pod-modal-date" required placeholder="Ex: 28 Octobre 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Durée *</label>
+                        <input type="text" id="pod-modal-duration" required placeholder="Ex: 18 min">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fichier Audio (ordinateur) ou Lien URL *</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                        <label style="background: #8b5cf6; color: white; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">
+                            <i class="fa-solid fa-folder-open"></i> Choisir un fichier audio
+                            <input type="file" id="pod-modal-file" accept="audio/*" style="display: none;" onchange="handleAudioFileSelect(event)">
+                        </label>
+                        <span id="pod-file-name" style="font-size: 0.85rem; color: var(--admin-muted);">Aucun fichier choisi</span>
+                    </div>
+                    <input type="text" id="pod-modal-url" placeholder="Ou coller un lien URL audio (https://...)">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+                    <button type="button" onclick="closePodcastModal()" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-text); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Annuler</button>
+                    <button type="submit" class="btn-admin" style="margin: 0; background: #8b5cf6;">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALE AJOUT / MODIFICATION VIDÉO -->
+    <div id="video-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+        <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 30px; width: 100%; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+            <h3 id="video-modal-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 10px; color: var(--admin-text);">Ajouter une Vidéo</h3>
+            <form class="admin-form" onsubmit="saveVideoModal(event)">
+                <input type="hidden" id="vid-edit-index" value="-1">
+                
+                <div class="form-group">
+                    <label>Titre de la Vidéo *</label>
+                    <input type="text" id="vid-modal-title" required placeholder="Ex: Démo Pub TV 2026">
+                </div>
+
+                <div class="form-group">
+                    <label>Sous-Catégorie *</label>
+                    <select id="vid-modal-subcat" required style="width: 100%; padding: 12px; background: #0d1322; border: 1px solid var(--admin-border); border-radius: 8px; color: white;">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Lien Embed YouTube (ou URL embed) *</label>
+                    <input type="text" id="vid-modal-url" required placeholder="Ex: https://www.youtube.com/embed/EXEMPLE1">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+                    <button type="button" onclick="closeVideoModal()" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-text); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Annuler</button>
+                    <button type="submit" class="btn-admin" style="margin: 0; background: #8b5cf6;">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

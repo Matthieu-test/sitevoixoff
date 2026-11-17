@@ -1,0 +1,231 @@
+:root {
+    --admin-bg: #0b0f19;
+    --admin-card: #111827;
+    --admin-sidebar: #070a12;
+    --admin-primary: #6366f1;
+    --admin-primary-hover: #4f46e5;
+    --admin-text: #f3f4f6;
+    --admin-muted: #9ca3af;
+    --admin-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body.admin-layout {
+    background-color: var(--admin-bg);
+    color: var(--admin-text);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar GAUCHE */
+.admin-sidebar {
+    width: 280px;
+    background-color: var(--admin-sidebar);
+    border-right: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 25px 20px;
+}
+
+.sidebar-brand h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin-bottom: 4px;
+}
+
+.sidebar-brand span {
+    font-size: 0.8rem;
+    color: var(--admin-muted);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 35px;
+    flex-grow: 1;
+}
+
+.sidebar-link {
+    color: var(--admin-muted);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-link i {
+    width: 18px;
+    text-align: center;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+    background-color: rgba(99, 102, 241, 0.15);
+    color: var(--admin-primary);
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--admin-border);
+    padding-top: 20px;
+}
+
+.back-site-btn {
+    color: var(--admin-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.back-site-btn:hover {
+    color: var(--admin-text);
+}
+
+/* Contenu DROITE */
+.admin-content {
+    margin-left: 280px;
+    flex-grow: 1;
+    padding: 40px 50px;
+}
+
+.content-header {
+    margin-bottom: 40px;
+}
+
+.content-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.content-header p {
+    color: var(--admin-muted);
+    font-size: 0.95rem;
+}
+
+.admin-sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 900px;
+}
+
+.admin-card {
+    background-color: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.admin-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--admin-border);
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--admin-text);
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: var(--admin-muted);
+    font-weight: 500;
+}
+
+.form-group input, .form-group textarea {
+    padding: 12px 14px;
+    background: #0d1322;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    color: var(--admin-text);
+    font-size: 0.95rem;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--admin-primary);
+}
+
+.btn-admin {
+    background: var(--admin-primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+.btn-admin:hover {
+    background: var(--admin-primary-hover);
+    transform: translateY(-1px);
+}
+
+.tab-content.hidden {
+    display: none;
+}
+
+/* Toast de notification */
+.admin-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #10b981;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+.admin-toast.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Masquer la modale par défaut */
+#article-modal.hidden {
+    display: none !important;
+}

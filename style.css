@@ -1,0 +1,252 @@
+:root {
+    --bg-dark: #090d16;
+    --bg-card: #131b2e;
+    --primary: #6366f1;
+    --accent-purple: #8b5cf6;
+    --accent-blue: #3b82f6;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* === EN-TÊTE STICKY === */
+.site-header {
+    background: rgba(9, 13, 22, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    color: var(--text-main);
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.nav-link:hover, .admin-nav-link:hover {
+    color: var(--text-main);
+}
+
+.nav-link.active {
+    color: var(--text-main);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 2px;
+}
+
+.admin-nav-link {
+    color: var(--accent-purple);
+    font-weight: 600;
+}
+
+/* === SECTION HERO === */
+.hero {
+    padding: 80px 0;
+    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-content h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.hero-content p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, opacity 0.2s;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--text-main);
+    color: var(--text-main);
+}
+
+.hero-visual img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+}
+
+/* === SECTIONS COMMUNES === */
+.section-block {
+    padding: 60px 0;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* === GRILLE MÉDIAS (Articles, Podcasts, Vidéos) === */
+.medias-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.media-card {
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.media-card h4 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.media-thumb {
+    width: 100%;
+    height: 150px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.media-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-caption {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* === FORMULAIRE & CONTACT === */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.about-content p {
+    max-width: 800px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* === PIED DE PAGE === */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 80px;
+    background: #0b0f18;
+}
+
+/* === GESTION DES ONGLETS === */
+.tab-page.hidden {
+    display: none;
+}
